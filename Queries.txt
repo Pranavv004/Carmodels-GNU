@@ -1,0 +1,59 @@
+% Query to find all expensive cars
+expensive(Model).
+
+% Query to find all recent cars
+recent(Model).
+
+% Query to find all cars of a specific brand
+cars_of_brand(toyota, Model).
+
+% Query to find all sedans
+cars_of_type(sedan, Model).
+
+% Query to find all petrol cars
+cars_by_fuel(petrol, Model).
+
+% Query to find all cars from Japan
+cars_by_origin(japan, Brand).
+
+% Query to find cars within a price range
+cars_within_price_range(20, 30, Model).
+
+% Query to find the cheapest car
+cheapest_car(Model).
+
+% Query to find the most expensive car
+most_expensive_car(Model).
+
+% Query to find the newest car
+newest_car(Model).
+
+% Find all affordable old cars:
+affordable_old_car(Model).
+
+% Find all American petrol cars:
+american_petrol_car(Model).
+
+% Find all sedans priced between $20,000 and $30,000:
+sedan_in_20_30k(Model).
+
+% Find all cars made in 2020 that cost more than $30,000:
+expensive_2020_car(Model).
+
+% Find all Japanese diesel sedans:
+japanese_diesel_sedan(Model).
+
+% Find all German sedans produced in 2019:
+german_sedan_2019(Model).
+
+% Find all South Korean cars made before 2019:
+old_south_korean(Model).
+
+% Find all American sedans costing above $25,000:
+american_expensive_sedan(Model).
+
+% Find all American cars that cost between $20,000 and $30,000 and run on petrol:
+american_midprice_petrol(Model).
+
+% Find all Japanese sedans from 2020 or newer that run on petrol:
+japanese_recent_petrol_sedan(Model).

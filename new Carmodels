@@ -1,0 +1,735 @@
+% Car brands
+brand(toyota).
+brand(honda).
+brand(ford).
+brand(bmw).
+brand(audi).
+brand(mercedes).
+brand(chevrolet).
+brand(nissan).
+brand(hyundai).
+brand(kia).
+
+% Car models
+model(toyota, camry).
+model(toyota, corolla).
+model(honda, accord).
+model(honda, civic).
+model(ford, mustang).
+model(ford, focus).
+model(bmw, series3).
+model(bmw, series5).
+model(audi, a4).
+model(audi, a6).
+model(mercedes, c_class).
+model(mercedes, e_class).
+model(chevrolet, impala).
+model(chevrolet, malibu).
+model(nissan, altima).
+model(nissan, maxima).
+model(hyundai, elantra).
+model(hyundai, sonata).
+model(kia, optima).
+model(kia, soul).
+
+% Car types
+type(camry, sedan).
+type(corolla, sedan).
+type(accord, sedan).
+type(civic, sedan).
+type(mustang, coupe).
+type(focus, hatchback).
+type(series3, sedan).
+type(series5, sedan).
+type(a4, sedan).
+type(a6, sedan).
+type(c_class, sedan).
+type(e_class, sedan).
+type(impala, sedan).
+type(malibu, sedan).
+type(altima, sedan).
+type(maxima, sedan).
+type(elantra, sedan).
+type(sonata, sedan).
+type(optima, sedan).
+type(soul, hatchback).
+
+% Fuel types
+fuel(camry, diesel).
+fuel(corolla, diesel).
+fuel(accord, petrol).
+fuel(civic, petrol).
+fuel(mustang, petrol).
+fuel(focus, petrol).
+fuel(series3, diesel).
+fuel(series5, diesel).
+fuel(a4, diesel).
+fuel(a6, diesel).
+fuel(c_class, petrol).
+fuel(e_class, petrol).
+fuel(impala, petrol).
+fuel(malibu, petrol).
+fuel(altima, petrol).
+fuel(maxima, petrol).
+fuel(elantra, petrol).
+fuel(sonata, petrol).
+fuel(optima, petrol).
+fuel(soul, petrol).
+
+% Car origins
+origin(toyota, japan).
+origin(honda, japan).
+origin(ford, usa).
+origin(bmw, germany).
+origin(audi, germany).
+origin(mercedes, germany).
+origin(chevrolet, usa).
+origin(nissan, japan).
+origin(hyundai, south_korea).
+origin(kia, south_korea).
+
+% Car prices (in thousands of dollars)
+price(camry, 25).
+price(corolla, 20).
+price(accord, 26).
+price(civic, 21).
+price(mustang, 35).
+price(focus, 19).
+price(series3, 40).
+price(series5, 55).
+price(a4, 38).
+price(a6, 50).
+price(c_class, 41).
+price(e_class, 54).
+price(impala, 31).
+price(malibu, 23).
+price(altima, 24).
+price(maxima, 34).
+price(elantra, 19).
+price(sonata, 22).
+price(optima, 23).
+price(soul, 18).
+
+% Car years
+year(camry, 2020).
+year(corolla, 2019).
+year(accord, 2021).
+year(civic, 2020).
+year(mustang, 2021).
+year(focus, 2018).
+year(series3, 2019).
+year(series5, 2021).
+year(a4, 2018).
+year(a6, 2020).
+year(c_class, 2021).
+year(e_class, 2019).
+year(impala, 2020).
+year(malibu, 2019).
+year(altima, 2021).
+year(maxima, 2020).
+year(elantra, 2019).
+year(sonata, 2020).
+year(optima, 2018).
+year(soul, 2017).
+
+% Rule to determine if a car is expensive
+expensive(Model) :-
+    price(Model, Price),
+    Price > 30.
+
+% Rule to determine if a car is a recent model (2020 or newer)
+recent(Model) :-
+    year(Model, Year),
+    Year >= 2020.
+
+% Rule to find cars from a specific brand
+cars_of_brand(Brand, Model) :-
+    model(Brand, Model).
+
+% Rule to find cars of a specific type
+cars_of_type(Type, Model) :-
+    type(Model, Type).
+
+% Rule to find cars by fuel type
+cars_by_fuel(FuelType, Model) :-
+    fuel(Model, FuelType).
+
+% Rule to find cars by origin country
+cars_by_origin(Country, Brand) :-
+    origin(Brand, Country).
+
+% Rule to find cars within a price range
+cars_within_price_range(MinPrice, MaxPrice, Model) :-
+    price(Model, Price),
+    Price >= MinPrice,
+    Price =< MaxPrice.
+
+% Rule to find the cheapest car
+cheapest_car(Model) :-
+    price(Model, Price),
+    \+ (price(_, OtherPrice), OtherPrice < Price).
+
+% Rule to find the most expensive car
+most_expensive_car(Model) :-
+    price(Model, Price),
+    \+ (price(_, OtherPrice), OtherPrice > Price).
+
+% Rule to find the oldest car
+oldest_car(Model) :-
+    year(Model, Year),
+    \+ (year(_, OtherYear), OtherYear < Year).
+
+% Rule to find the newest car
+newest_car(Model) :-
+    year(Model, Year),
+    \+ (year(_, OtherYear), OtherYear > Year).
+
+% Rule to find cars with a specific brand and type
+brand_and_type(Brand, Type, Model) :-
+    model(Brand, Model),
+    type(Model, Type).
+
+% Rule to find cars with a specific brand and fuel type
+brand_and_fuel(Brand, FuelType, Model) :-
+    model(Brand, Model),
+    fuel(Model, FuelType).
+
+% Rule to find cars with a specific brand and within a price range
+brand_within_price_range(Brand, MinPrice, MaxPrice, Model) :-
+    model(Brand, Model),
+    price(Model, Price),
+    Price >= MinPrice,
+    Price =< MaxPrice.
+
+% Rule to find cars with a specific brand and year
+brand_and_year(Brand, Year, Model) :-
+    model(Brand, Model),
+    year(Model, Year).
+
+% Rule to find cars with a specific type and within a price range
+type_within_price_range(Type, MinPrice, MaxPrice, Model) :-
+    type(Model, Type),
+    price(Model, Price),
+    Price >= MinPrice,
+    Price =< MaxPrice.
+
+% Rule to find cars with a specific type and fuel type
+type_and_fuel(Type, FuelType, Model) :-
+    type(Model, Type),
+    fuel(Model, FuelType).
+
+% Rule to find cars with a specific type and year
+type_and_year(Type, Year, Model) :-
+    type(Model, Type),
+    year(Model, Year).
+
+% Rule to find cars with a specific fuel type and within a price range
+fuel_within_price_range(FuelType, MinPrice, MaxPrice, Model) :-
+    fuel(Model, FuelType),
+    price(Model, Price),
+    Price >= MinPrice,
+    Price =< MaxPrice.
+
+% Rule to find cars with a specific fuel type and year
+fuel_and_year(FuelType, Year, Model) :-
+    fuel(Model, FuelType),
+    year(Model, Year).
+
+% Rule to find cars with a specific origin and type
+origin_and_type(Country, Type, Model) :-
+    origin(Brand, Country),
+    model(Brand, Model),
+    type(Model, Type).
+
+% Rule to find cars with a specific origin and fuel type
+origin_and_fuel(Country, FuelType, Model) :-
+    origin(Brand, Country),
+    model(Brand, Model),
+    fuel(Model, FuelType).
+
+% Rule to find cars with a specific origin and within a price range
+origin_within_price_range(Country, MinPrice, MaxPrice, Model) :-
+    origin(Brand, Country),
+    model(Brand, Model),
+    price(Model, Price),
+    Price >= MinPrice,
+    Price =< MaxPrice.
+
+% Rule to find cars with a specific origin and year
+origin_and_year(Country, Year, Model) :-
+    origin(Brand, Country),
+    model(Brand, Model),
+    year(Model, Year).
+
+% Rule to find cars with a specific origin, type, and fuel type
+origin_type_fuel(Country, Type, FuelType, Model) :-
+    origin(Brand, Country),
+    model(Brand, Model),
+    type(Model, Type),
+    fuel(Model, FuelType).
+
+% Rule to find cars with a specific origin, type, and within a price range
+origin_type_price(Country, Type, MinPrice, MaxPrice, Model) :-
+    origin(Brand, Country),
+    model(Brand, Model),
+    type(Model, Type),
+    price(Model, Price),
+    Price >= MinPrice,
+    Price =< MaxPrice.
+
+% Rule to find cars with a specific origin, fuel type, and year
+origin_fuel_year(Country, FuelType, Year, Model) :-
+    origin(Brand, Country),
+    model(Brand, Model),
+    fuel(Model, FuelType),
+    year(Model, Year).
+
+% Rule to find cars with a specific type, fuel type, and year
+type_fuel_year(Type, FuelType, Year, Model) :-
+    type(Model, Type),
+    fuel(Model, FuelType),
+    year(Model, Year).
+
+% Rule to find cars with a specific type, fuel type, and within a price range
+type_fuel_price(Type, FuelType, MinPrice, MaxPrice, Model) :-
+    type(Model, Type),
+    fuel(Model, FuelType),
+    price(Model, Price),
+    Price >= MinPrice,
+    Price =< MaxPrice.
+
+% Rule to find cars with a specific brand, type, and fuel type
+brand_type_fuel(Brand, Type, FuelType, Model) :-
+    model(Brand, Model),
+    type(Model, Type),
+    fuel(Model, FuelType).
+
+% Rule to find cars with a specific brand, type, and within a price range
+brand_type_price(Brand, Type, MinPrice, MaxPrice, Model) :-
+    model(Brand, Model),
+    type(Model, Type),
+    price(Model, Price),
+    Price >= MinPrice,
+    Price =< MaxPrice.
+
+% Rule to find cars with a specific brand, type, and year
+brand_type_year(Brand, Type, Year, Model) :-
+    model(Brand, Model),
+    type(Model, Type),
+    year(Model, Year).
+
+% Rule to find cars with a specific brand, fuel type, and within a price range
+brand_fuel_price(Brand, FuelType, MinPrice, MaxPrice, Model) :-
+    model(Brand, Model),
+    fuel(Model, FuelType),
+    price(Model, Price),
+    Price >= MinPrice,
+    Price =< MaxPrice.
+
+% Rule to find cars with a specific brand, fuel type, and year
+brand_fuel_year(Brand, FuelType, Year, Model) :-
+    model(Brand, Model),
+    fuel(Model, FuelType),
+    year(Model, Year).
+
+% Rule to find cars with a specific brand, type, fuel type, and within a price range
+brand_type_fuel_price(Brand, Type, FuelType, MinPrice, MaxPrice, Model) :-
+    model(Brand, Model),
+    type(Model, Type),
+    fuel(Model, FuelType),
+    price(Model, Price),
+    Price >= MinPrice,
+    Price =< MaxPrice.
+
+% Rule to find cars with a specific brand, type, fuel type, and year
+brand_type_fuel_year(Brand, Type, FuelType, Year, Model) :-
+    model(Brand, Model),
+    type(Model, Type),
+    fuel(Model, FuelType),
+    year(Model, Year).
+
+% Rule to find cars with a specific brand, type, within a price range, and year
+brand_type_price_year(Brand, Type, MinPrice, MaxPrice, Year, Model) :-
+    model(Brand, Model),
+    type(Model, Type),
+    price(Model, Price),
+    Price >= MinPrice,
+    Price =< MaxPrice,
+    year(Model, Year).
+
+% Rule to find cars with a specific brand, fuel type, within a price range, and year
+brand_fuel_price_year(Brand, FuelType, MinPrice, MaxPrice, Year, Model) :-
+    model(Brand, Model),
+    fuel(Model, FuelType),
+    price(Model, Price),
+    Price >= MinPrice,
+    Price =< MaxPrice,
+    year(Model, Year).
+
+% Rule to find cars with a specific type, fuel type, within a price range, and year
+type_fuel_price_year(Type, FuelType, MinPrice, MaxPrice, Year, Model) :-
+    type(Model, Type),
+    fuel(Model, FuelType),
+    price(Model, Price),
+    Price >= MinPrice,
+    Price =< MaxPrice,
+    year(Model, Year).
+
+% Rule to find cars with a specific brand, type, fuel type, within a price range, and year
+brand_type_fuel_price_year(Brand, Type, FuelType, MinPrice, MaxPrice, Year, Model) :-
+    model(Brand, Model),
+    type(Model, Type),
+    fuel(Model, FuelType),
+    price(Model, Price),
+    Price >= MinPrice,
+    Price =< MaxPrice,
+    year(Model, Year).
+	
+%Rule to find cars with a specific brand, fuel type, and origin
+brand_fuel_origin(Brand, FuelType, Country, Model) :-
+    model(Brand, Model),
+    fuel(Model, FuelType),
+    origin(Brand, Country).
+	
+%Rule to find cars with a specific brand, fuel type, and recent model
+brand_fuel_recent(Brand, FuelType, Model) :-
+    model(Brand, Model),
+    fuel(Model, FuelType),
+    recent(Model).
+	
+%Rule to find cars with a specific origin, type, and recent model
+origin_type_recent(Country, Type, Model) :-
+    origin(Brand, Country),
+    model(Brand, Model),
+    type(Model, Type),
+    recent(Model).
+	
+%Rule to find cars with a specific origin, type, and expensive
+origin_type_expensive(Country, Type, Model) :-
+    origin(Brand, Country),
+    model(Brand, Model),
+    type(Model, Type),
+    expensive(Model).
+	
+%Rule to find cars with a specific brand, fuel type, and expensive
+brand_fuel_expensive(Brand, FuelType, Model) :-
+    model(Brand, Model),
+    fuel(Model, FuelType),
+    expensive(Model).
+	
+%Rule to find cars with a specific fuel type, recent model, and expensive
+fuel_recent_expensive(FuelType, Model) :-
+    fuel(Model, FuelType),
+    recent(Model),
+    expensive(Model).
+	
+%Rule to find cars with a specific type, origin, and recent model
+type_origin_recent(Type, Country, Model) :-
+    type(Model, Type),
+    origin(Brand, Country),
+    model(Brand, Model),
+    recent(Model).
+	
+%Rule to find cars with a specific origin, type, and within a price range
+origin_type_price_range(Country, Type, MinPrice, MaxPrice, Model) :-
+    origin(Brand, Country),
+    model(Brand, Model),
+    type(Model, Type),
+    price(Model, Price),
+    Price >= MinPrice,
+    Price =< MaxPrice.
+	
+%Rule to find cars with a specific brand, type, within a price range, and recent model
+brand_type_price_recent(Brand, Type, MinPrice, MaxPrice, Model) :-
+    model(Brand, Model),
+    type(Model, Type),
+    price(Model, Price),
+    recent(Model),
+    Price >= MinPrice,
+    Price =< MaxPrice.
+	
+%Rule to find cars with a specific brand, type, and the cheapest
+brand_type_cheapest(Brand, Type, Model) :-
+    model(Brand, Model),
+    type(Model, Type),
+    price(Model, Price),
+    \+ (model(Brand, OtherModel), type(OtherModel, Type), price(OtherModel, OtherPrice), OtherPrice < Price).
+	
+%Rule to find cars with a specific brand, origin, and year
+brand_origin_year(Brand, Country, Year, Model) :-
+    model(Brand, Model),
+    origin(Brand, Country),
+    year(Model, Year).
+	
+%Rule to find cars with a specific fuel type, type, and expensive
+fuel_type_expensive(FuelType, Type, Model) :-
+    fuel(Model, FuelType),
+    type(Model, Type),
+    expensive(Model).
+	
+%Rule to find cars with a specific origin, fuel type, and recent model
+origin_fuel_recent(Country, FuelType, Model) :-
+    origin(Brand, Country),
+    model(Brand, Model),
+    fuel(Model, FuelType),
+    recent(Model).
+	
+%Rule to find cars with a specific origin, type, fuel type, and expensive
+origin_type_fuel_expensive(Country, Type, FuelType, Model) :-
+    origin(Brand, Country),
+    model(Brand, Model),
+    type(Model, Type),
+    fuel(Model, FuelType),
+    expensive(Model).
+	
+%Rule to find cars with a specific type, year, and the cheapest
+type_year_cheapest(Type, Year, Model) :-
+    type(Model, Type),
+    year(Model, Year),
+    price(Model, Price),
+    \+ (type(OtherModel, Type), year(OtherModel, Year), price(OtherModel, OtherPrice), OtherPrice < Price).
+	
+%Rule to find cars with a specific origin, fuel type, within a price range, and recent model
+origin_fuel_price_recent(Country, FuelType, MinPrice, MaxPrice, Model) :-
+    origin(Brand, Country),
+    model(Brand, Model),
+    fuel(Model, FuelType),
+    price(Model, Price),
+    recent(Model),
+    Price >= MinPrice,
+    Price =< MaxPrice.
+	
+%Rule to find cars with a specific brand, origin, fuel type, and recent model
+brand_origin_fuel_recent(Brand, Country, FuelType, Model) :-
+    model(Brand, Model),
+    origin(Brand, Country),
+    fuel(Model, FuelType),
+    recent(Model).
+	
+%Rule to find cars with a specific brand, origin, within a price range, and recent model
+brand_origin_price_recent(Brand, Country, MinPrice, MaxPrice, Model) :-
+    model(Brand, Model),
+    origin(Brand, Country),
+    price(Model, Price),
+    recent(Model),
+    Price >= MinPrice,
+    Price =< MaxPrice.
+	
+%Rule to find cars with a specific brand, fuel type, and year
+brand_fuel_year(Brand, FuelType, Year, Model) :-
+    model(Brand, Model),
+    fuel(Model, FuelType),
+    year(Model, Year).
+	
+%Rule to find cars with a specific type, origin, and within a price range
+type_origin_price_range(Type, Country, MinPrice, MaxPrice, Model) :-
+    type(Model, Type),
+    origin(Brand, Country),
+    model(Brand, Model),
+    price(Model, Price),
+    Price >= MinPrice,
+    Price =< MaxPrice.
+	
+%Rule to find cars with a specific fuel type, brand, and recent model
+fuel_brand_recent(FuelType, Brand, Model) :-
+    fuel(Model, FuelType),
+    model(Brand, Model),
+    recent(Model).
+	
+%Rule to find cars with a specific brand, type, and origin
+brand_type_origin(Brand, Type, Country, Model) :-
+    model(Brand, Model),
+    type(Model, Type),
+    origin(Brand, Country).
+	
+%Rule to find cars with a specific type, fuel, within a price range, and year
+type_fuel_price_year(Type, FuelType, MinPrice, MaxPrice, Year, Model) :-
+    type(Model, Type),
+    fuel(Model, FuelType),
+    price(Model, Price),
+    year(Model, Year),
+    Price >= MinPrice,
+    Price =< MaxPrice.
+	
+%Rule to find cars with a specific brand, origin, fuel type, within a price range, and recent model
+brand_origin_fuel_price_recent(Brand, Country, FuelType, MinPrice, MaxPrice, Model) :-
+    model(Brand, Model),
+    origin(Brand, Country),
+    fuel(Model, FuelType),
+    price(Model, Price),
+    recent(Model),
+    Price >= MinPrice,
+    Price =< MaxPrice.
+	
+%Rule to find cars with a specific brand, origin, type, fuel type, and year
+brand_origin_type_fuel_year(Brand, Country, Type, FuelType, Year, Model) :-
+    model(Brand, Model),
+    origin(Brand, Country),
+    type(Model, Type),
+    fuel(Model, FuelType),
+    year(Model, Year).
+	
+%Rule to find cars with a specific origin, type, fuel type, within a price range, and year
+origin_type_fuel_price_year(Country, Type, FuelType, MinPrice, MaxPrice, Year, Model) :-
+    origin(Brand, Country),
+    model(Brand, Model),
+    type(Model, Type),
+    fuel(Model, FuelType),
+    price(Model, Price),
+    year(Model, Year),
+    Price >= MinPrice,
+    Price =< MaxPrice.
+	
+%Rule to find cars with a specific type, fuel type, origin, and recent model
+type_fuel_origin_recent(Type, FuelType, Country, Model) :-
+    type(Model, Type),
+    fuel(Model, FuelType),
+    origin(Brand, Country),
+    model(Brand, Model),
+    recent(Model).
+	
+%Rule to find cars with a specific brand, fuel type, within a price range, and recent model
+brand_fuel_price_recent(Brand, FuelType, MinPrice, MaxPrice, Model) :-
+    model(Brand, Model),
+    fuel(Model, FuelType),
+    price(Model, Price),
+    recent(Model),
+    Price >= MinPrice,
+    Price =< MaxPrice.
+	
+%Rule to find cars with a specific brand, type, fuel type, and expensive
+brand_type_fuel_expensive(Brand, Type, FuelType, Model) :-
+    model(Brand, Model),
+    type(Model, Type),
+    fuel(Model, FuelType),
+    expensive(Model).
+	
+%Rule to find cars with a specific type, origin, and the most recent model
+type_origin_most_recent(Type, Country, Model) :-
+    type(Model, Type),
+    origin(Brand, Country),
+    model(Brand, Model),
+    recent(Model),
+    \+ (model(Brand, OtherModel), type(OtherModel, Type), origin(Brand, Country), year(OtherModel, OtherYear), OtherYear > Year).
+	
+%Rule to find cars with a specific fuel type, brand, origin, and recent model
+fuel_brand_origin_recent(FuelType, Brand, Country, Model) :-
+    fuel(Model, FuelType),
+    model(Brand, Model),
+    origin(Brand, Country),
+    recent(Model).
+	
+%Rule to find cars with a specific brand, origin, type, and recent model
+brand_origin_type_recent(Brand, Country, Type, Model) :-
+    model(Brand, Model),
+    origin(Brand, Country),
+    type(Model, Type),
+    recent(Model).
+	
+%Rule to find cars with a specific fuel type, type, within a price range, and recent model
+fuel_type_price_recent(FuelType, Type, MinPrice, MaxPrice, Model) :-
+    fuel(Model, FuelType),
+    type(Model, Type),
+    price(Model, Price),
+    recent(Model),
+    Price >= MinPrice,
+    Price =< MaxPrice.
+	
+%Rule to find cars with a specific origin, type, and fuel type within a price range
+origin_type_fuel_price(Country, Type, FuelType, MinPrice, MaxPrice, Model) :-
+    origin(Brand, Country),
+    model(Brand, Model),
+    type(Model, Type),
+    fuel(Model, FuelType),
+    price(Model, Price),
+    Price >= MinPrice,
+    Price =< MaxPrice.
+	
+%Rule to find cars with a specific type, origin, and the most expensive
+type_origin_most_expensive(Type, Country, Model) :-
+    type(Model, Type),
+    origin(Brand, Country),
+    model(Brand, Model),
+    price(Model, Price),
+    \+ (type(OtherModel, Type), origin(Brand, Country), model(Brand, OtherModel), price(OtherModel, OtherPrice), OtherPrice > Price).
+	
+%Rule to find cars with a specific brand, fuel type, type, and year
+brand_fuel_type_year(Brand, FuelType, Type, Year, Model) :-
+    model(Brand, Model),
+    fuel(Model, FuelType),
+    type(Model, Type),
+    year(Model, Year).
+	
+%Rule to find cars with a specific type, fuel type, within a price range, and most recent
+type_fuel_price_most_recent(Type, FuelType, MinPrice, MaxPrice, Model) :-
+    type(Model, Type),
+    fuel(Model, FuelType),
+    price(Model, Price),
+    recent(Model),
+    Price >= MinPrice,
+    Price =< MaxPrice.
+	
+%Rule to find cars with a specific origin, brand, and most recent model
+origin_brand_most_recent(Country, Brand, Model) :-
+    origin(Brand, Country),
+    model(Brand, Model),
+    recent(Model),
+    \+ (model(Brand, OtherModel), year(OtherModel, OtherYear), OtherYear > Year).
+	
+%Rule to find cars with a specific type, origin, fuel type, and recent model
+type_origin_fuel_recent(Type, Country, FuelType, Model) :-
+    type(Model, Type),
+    origin(Brand, Country),
+    fuel(Model, FuelType),
+    recent(Model).
+	
+%Rule to find cars with a specific brand, origin, type, and year
+brand_origin_type_year(Brand, Country, Type, Year, Model) :-
+    model(Brand, Model),
+    origin(Brand, Country),
+    type(Model, Type),
+    year(Model, Year).
+	
+%Rule to find cars with a specific origin, type, within a price range, and recent model
+origin_type_price_recent(Country, Type, MinPrice, MaxPrice, Model) :-
+    origin(Brand, Country),
+    model(Brand, Model),
+    type(Model, Type),
+    price(Model, Price),
+    recent(Model),
+    Price >= MinPrice,
+    Price =< MaxPrice.
+	
+%Rule to find cars with a specific type, fuel type, origin, and year
+type_fuel_origin_year(Type, FuelType, Country, Year, Model) :-
+    type(Model, Type),
+    fuel(Model, FuelType),
+    origin(Brand, Country),
+    year(Model, Year).
+	
+%Rule to find cars with a specific fuel type, origin, within a price range, and most recent
+fuel_origin_price_most_recent(FuelType, Country, MinPrice, MaxPrice, Model) :-
+    fuel(Model, FuelType),
+    origin(Brand, Country),
+    price(Model, Price),
+    recent(Model),
+    Price >= MinPrice,
+    Price =< MaxPrice.
+	
+%Rule to find cars with a specific origin, fuel type, type, and recent model
+origin_fuel_type_recent(Country, FuelType, Type, Model) :-
+    origin(Brand, Country),
+    model(Brand, Model),
+    fuel(Model, FuelType),
+    type(Model, Type),
+    recent(Model).
+	
+%Rule to find cars with a specific brand, origin, fuel type, within a price range, and year
+brand_origin_fuel_price_year(Brand, Country, FuelType, MinPrice, MaxPrice, Year, Model) :-
+    model(Brand, Model),
+    origin(Brand, Country),
+    fuel(Model, FuelType),
+    price(Model, Price),
+    year(Model, Year),
+    Price >= MinPrice,
+    Price =< MaxPrice.
